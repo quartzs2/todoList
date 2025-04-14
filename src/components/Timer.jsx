@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Timer.module.css";
+import classNames from "classnames";
 
-const Timer = () => {
+const Timer = ({ className }) => {
   const [isStopped, setIsStopped] = useState(true);
   const [minute, setMinute] = useState(5);
   const [second, setSecond] = useState(0);
@@ -56,7 +57,7 @@ const Timer = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <section className={classNames(styles.container, className)}>
       <div className={styles.desc}>타이머 - {isStopped ? "정지됨" : "켜짐"}</div>
       <div className={styles.clock}>
         {minute}분 {second}초
@@ -70,7 +71,7 @@ const Timer = () => {
         </button>
         <button onClick={clearTime}>초기화</button>
       </div>
-    </div>
+    </section>
   );
 };
 export default Timer;

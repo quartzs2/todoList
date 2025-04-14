@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "../styles/Stopwatch.module.css";
+import classNames from "classnames";
 
-const Stopwatch = () => {
+const Stopwatch = ({ className }) => {
   const [accumulatedTime, setAccumulatedTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [now, setNow] = useState(0);
@@ -52,7 +53,7 @@ const Stopwatch = () => {
   let secondsPassed = currentDisplayTime / 1000;
 
   return (
-    <div className={styles.container}>
+    <section className={classNames(styles.container, className)}>
       <div className={styles.desc}>스톱워치</div>
       <div className={styles.clock}>{secondsPassed.toFixed(3)}</div>
       <div className={styles.buttons}>
@@ -64,7 +65,7 @@ const Stopwatch = () => {
         </button>
         <button onClick={clearTime}>초기화</button>
       </div>
-    </div>
+    </section>
   );
 };
 export default Stopwatch;

@@ -1,0 +1,25 @@
+.main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.advices {
+  grid-column: 1/2;
+}
+
+.clock {
+  grid-column: 2/3;
+}
+
+.timer {
+  grid-column: 1/2;
+}
+
+.stopwatch {
+  grid-column: 2/3;
+}
+
+.todolist {
+  grid-column: 1/3;
+  padding-top: 16px;
+}

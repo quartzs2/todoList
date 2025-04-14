@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/Clock.module.css";
+import classNames from "classnames";
 
 const getTime = () => {
   const now = new Date();
@@ -16,7 +17,7 @@ const getTime = () => {
   return timeString;
 };
 
-const Clock = () => {
+const Clock = ({ className }) => {
   const [time, setTime] = useState(() => getTime());
 
   useEffect(() => {
@@ -28,10 +29,10 @@ const Clock = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <section className={classNames(styles.container, className)}>
       <div className={styles.desc}>현재시간</div>
       <div className={styles.clock}>{time}</div>
-    </div>
+    </section>
   );
 };
 export default Clock;
