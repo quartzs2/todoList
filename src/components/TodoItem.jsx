@@ -1,5 +1,5 @@
-import styles from "../styles/TodoItem.module.css";
 import { useState } from "react";
+import styles from "../styles/TodoItem.module.css";
 
 const TodoItem = ({ id, content, setTodos }) => {
   const [isModify, setIsModify] = useState(false);

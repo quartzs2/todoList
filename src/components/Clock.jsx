@@ -1,5 +1,5 @@
-import styles from "../styles/Clock.module.css";
 import { useEffect, useState } from "react";
+import styles from "../styles/Clock.module.css";
 
 const getTime = () => {
   const now = new Date();
