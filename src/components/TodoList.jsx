@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useReducer, useState, useEffect } from "react";
 import styles from "../styles/TodoList.module.css";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
@@ -17,7 +17,6 @@ function todoReducer(todos, action) {
         isDone: false,
       };
       newTodos = [...todos, newTodo];
-
       break;
     }
     case "update_todo": {
@@ -35,7 +34,6 @@ function todoReducer(todos, action) {
     }
   }
 
-  localStorage.setItem(TODO_LIST_KEY, JSON.stringify(newTodos));
   return newTodos;
 }
 
@@ -52,6 +50,10 @@ const TodoList = ({ className }) => {
   const [category, setCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   let todosWillDisplay;
+
+  useEffect(() => {
+    localStorage.setItem(TODO_LIST_KEY, JSON.stringify(todos));
+  }, [todos]);
 
   switch (category) {
     case "checked":
