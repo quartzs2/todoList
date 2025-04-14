@@ -1,0 +1,37 @@
+.container {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px;
+}
+
+.desc {
+  font-size: 16px;
+}
+
+.clock {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.buttons {
+  display: flex;
+  gap: 4px;
+  & button {
+    background-color: white;
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid gainsboro;
+
+    &:not(:disabled):hover {
+      border: 2px solid black;
+    }
+
+    &:not(:disabled):active {
+      background-color: black;
+      color: white;
+    }
+  }
+}
