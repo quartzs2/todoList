@@ -10,12 +10,13 @@ function todoReducer(todos, action) {
       const newTodo = {
         id: Date.now(),
         content: action.content,
+        isDone: false,
       };
       return [...todos, newTodo];
     }
     case "update_todo": {
       return todos.map((todo) =>
-        todo.id === action.id ? { ...todo, content: action.content } : todo
+        todo.id === action.id ? { ...todo, content: action.content, isDone: action.isDone } : todo
       );
     }
     case "delete_todo": {

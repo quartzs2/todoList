@@ -4,6 +4,7 @@
   align-items: center;
   padding-inline: 8px;
   gap: 4px;
+  border-radius: 8px;
 }
 
 .content {
@@ -37,4 +38,8 @@
     background-color: black;
     color: white;
   }
+}
+
+.done {
+  background-color: aliceblue;
 }

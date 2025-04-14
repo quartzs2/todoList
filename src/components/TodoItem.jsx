@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styles from "../styles/TodoItem.module.css";
+import classNames from "classnames";
 
-const TodoItem = ({ id, content, dispatch }) => {
+const TodoItem = ({ id, content, isDone, dispatch }) => {
   const [isModify, setIsModify] = useState(false);
   const [currentContent, setCurrentContent] = useState(content);
 
@@ -9,7 +10,6 @@ const TodoItem = ({ id, content, dispatch }) => {
     dispatch({
       type: "delete_todo",
       id,
-      content,
     });
   };
 
@@ -18,7 +18,8 @@ const TodoItem = ({ id, content, dispatch }) => {
       dispatch({
         type: "update_todo",
         id,
-        currentContent,
+        content: currentContent,
+        isDone,
       });
       setIsModify(false);
     } else {
@@ -29,8 +30,12 @@ const TodoItem = ({ id, content, dispatch }) => {
 
   const handleContentChange = (e) => setCurrentContent(e.target.value);
 
+  const handleIsDone = () =>
+    dispatch({ type: "update_todo", id, content: currentContent, isDone: !isDone });
+
   return (
-    <div className={styles.todoItem}>
+    <div className={classNames(styles.todoItem, isDone && styles.done)}>
+      <input type="checkbox" checked={isDone} onChange={handleIsDone} />
       {isModify ? (
         <input
           type="text"
