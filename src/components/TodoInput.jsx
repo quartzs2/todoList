@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/TodoInput.module.css";
 
-const TodoInput = ({ setTodos }) => {
+const TodoInput = ({ dispatch }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
@@ -19,12 +19,10 @@ const TodoInput = ({ setTodos }) => {
       return;
     }
 
-    const newTodo = {
-      id: Date.now(),
+    dispatch({
+      type: "add_todo",
       content: trimmedValue,
-    };
-
-    setTodos((prev) => [...prev, newTodo]);
+    });
 
     setInputValue("");
   };

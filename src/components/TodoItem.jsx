@@ -1,19 +1,25 @@
 import { useState } from "react";
 import styles from "../styles/TodoItem.module.css";
 
-const TodoItem = ({ id, content, setTodos }) => {
+const TodoItem = ({ id, content, dispatch }) => {
   const [isModify, setIsModify] = useState(false);
   const [currentContent, setCurrentContent] = useState(content);
 
   const handleDelete = () => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    dispatch({
+      type: "delete_todo",
+      id,
+      content,
+    });
   };
 
   const handleUpdate = () => {
     if (isModify) {
-      setTodos((prevTodos) =>
-        prevTodos.map((todo) => (todo.id === id ? { ...todo, content: currentContent } : todo))
-      );
+      dispatch({
+        type: "update_todo",
+        id,
+        currentContent,
+      });
       setIsModify(false);
     } else {
       setIsModify(true);
