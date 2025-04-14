@@ -1,3 +1,4 @@
+import Advices from "./components/Advices";
 import Clock from "./components/Clock";
 import Stopwatch from "./components/Stopwatch";
 import Timer from "./components/Timer";
@@ -9,6 +10,7 @@ function App() {
       <Clock />
       <Timer />
       <Stopwatch />
+      <Advices />
       <TodoList />
     </>
   );
