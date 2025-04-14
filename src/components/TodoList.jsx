@@ -1,9 +1,10 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import styles from "../styles/TodoList.module.css";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
 import classNames from "classnames";
 import { TODO_LIST_KEY } from "../constants/storageKey";
+import TodoFilter from "./TodoFilter";
 
 function todoReducer(todos, action) {
   let newTodos;
@@ -48,12 +49,32 @@ const loadInitialTodos = () => {
 
 const TodoList = ({ className }) => {
   const [todos, dispatch] = useReducer(todoReducer, null, loadInitialTodos);
+  const [category, setCategory] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  let todosWillDisplay;
+
+  switch (category) {
+    case "checked":
+      todosWillDisplay = todos.filter((todo) => todo.isDone);
+      break;
+    case "unchecked":
+      todosWillDisplay = todos.filter((todo) => !todo.isDone);
+      break;
+    default:
+      todosWillDisplay = todos;
+      break;
+  }
+
+  todosWillDisplay = todosWillDisplay.filter((todo) =>
+    todo.content.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <section className={classNames(className)}>
       <TodoInput dispatch={dispatch} />
+      <TodoFilter setCategory={setCategory} setSearchTerm={setSearchTerm} />
       <div className={styles.todoList}>
-        {todos.map((todo) => (
+        {todosWillDisplay.map((todo) => (
           <TodoItem key={todo.id} dispatch={dispatch} {...todo} />
         ))}
       </div>
