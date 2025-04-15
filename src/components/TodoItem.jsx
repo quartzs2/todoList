@@ -1,12 +1,15 @@
 import styles from "../styles/TodoItem.module.css";
 import classNames from "classnames";
 
-const TodoItem = ({ id, content, isDone, dispatch, setCurrentTodo, setModalOpen }) => {
+const TodoItem = ({ id, content, isDone, dispatch, setCurrentTodo, setModalOpen, currentTodo }) => {
   const handleDelete = () => {
     dispatch({
       type: "delete_todo",
       id,
     });
+    if (currentTodo.id === id) {
+      setCurrentTodo(null);
+    }
   };
 
   const handleIsDone = () => dispatch({ type: "update_todo", id, content, isDone: !isDone });

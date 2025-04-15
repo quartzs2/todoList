@@ -85,6 +85,7 @@ const TodoList = ({ className }) => {
             dispatch={dispatch}
             setCurrentTodo={setCurrentTodo}
             setModalOpen={setModalOpen}
+            currentTodo={currentTodo}
             {...todo}
           />
         ))}
