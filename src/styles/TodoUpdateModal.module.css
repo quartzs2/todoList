@@ -1,0 +1,38 @@
+.title {
+  margin-bottom: 8px;
+}
+.textarea {
+  resize: none;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.buttons button {
+  border: none;
+  padding: 4px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid gainsboro;
+  font-weight: 500;
+
+  &:hover {
+    border: 2px solid black;
+  }
+
+  &:active {
+    background-color: black;
+    color: white;
+  }
+}
+
+.error {
+  margin-bottom: 16px;
+}

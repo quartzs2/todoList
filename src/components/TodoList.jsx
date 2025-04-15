@@ -5,6 +5,7 @@ import TodoItem from "./TodoItem";
 import classNames from "classnames";
 import { TODO_LIST_KEY } from "../constants/storageKey";
 import TodoFilter from "./TodoFilter";
+import TodoUpdateModal from "./TodoUpdateModal";
 
 function todoReducer(todos, action) {
   let newTodos;
@@ -49,6 +50,8 @@ const TodoList = ({ className }) => {
   const [todos, dispatch] = useReducer(todoReducer, null, loadInitialTodos);
   const [category, setCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentTodo, setCurrentTodo] = useState(null);
   let todosWillDisplay;
 
   useEffect(() => {
@@ -77,9 +80,21 @@ const TodoList = ({ className }) => {
       <TodoFilter setCategory={setCategory} setSearchTerm={setSearchTerm} />
       <div className={styles.todoList}>
         {todosWillDisplay.map((todo) => (
-          <TodoItem key={todo.id} dispatch={dispatch} {...todo} />
+          <TodoItem
+            key={todo.id}
+            dispatch={dispatch}
+            setCurrentTodo={setCurrentTodo}
+            setModalOpen={setModalOpen}
+            {...todo}
+          />
         ))}
       </div>
+      <TodoUpdateModal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        currentTodo={currentTodo}
+        dispatch={dispatch}
+      />
     </section>
   );
 };
