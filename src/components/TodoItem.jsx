@@ -1,7 +1,18 @@
 import styles from "../styles/TodoItem.module.css";
 import classNames from "classnames";
 
-const TodoItem = ({ id, content, isDone, dispatch, setCurrentTodo, setModalOpen, currentTodo }) => {
+const TodoItem = ({
+  id,
+  content,
+  isDone,
+  dispatch,
+  setCurrentTodo,
+  setModalOpen,
+  currentTodo,
+  onDragStart,
+  onDragEnter,
+  onDragEnd,
+}) => {
   const handleDelete = () => {
     dispatch({
       type: "delete_todo",
@@ -20,7 +31,14 @@ const TodoItem = ({ id, content, isDone, dispatch, setCurrentTodo, setModalOpen,
   };
 
   return (
-    <div className={classNames(styles.todoItem, isDone && styles.done)}>
+    <div
+      className={classNames(styles.todoItem, isDone && styles.done)}
+      draggable
+      onDragStart={onDragStart}
+      onDragEnter={onDragEnter}
+      onDragEnd={onDragEnd}
+      onDragOver={(e) => e.preventDefault()}
+    >
       <input type="checkbox" checked={isDone} onChange={handleIsDone} />
 
       <div className={styles.content}>{content}</div>

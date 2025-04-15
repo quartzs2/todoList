@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect } from "react";
+import { useReducer, useState, useEffect, useRef } from "react";
 import styles from "../styles/TodoList.module.css";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
@@ -30,6 +30,13 @@ function todoReducer(todos, action) {
       newTodos = todos.filter((todo) => todo.id !== action.id);
       break;
     }
+    case "changeOrder": {
+      newTodos = [...todos];
+      const dragItemValue = newTodos[action.dragItem];
+      newTodos.splice(action.dragItem, 1);
+      newTodos.splice(action.dragOverItem, 0, dragItemValue);
+      break;
+    }
     default: {
       throw Error("Unknown action: " + action.type);
     }
@@ -52,7 +59,28 @@ const TodoList = ({ className }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [currentTodo, setCurrentTodo] = useState(null);
+  const dragItem = useRef();
+  const dragOverItem = useRef();
   let todosWillDisplay;
+
+  const dragStart = (e, position) => {
+    dragItem.current = position;
+  };
+
+  const dragEnter = (e, position) => {
+    dragOverItem.current = position;
+  };
+
+  const drop = () => {
+    dispatch({
+      type: "changeOrder",
+      dragItem: dragItem.current,
+      dragOverItem: dragOverItem.current,
+    });
+
+    dragItem.current = null;
+    dragOverItem.current = null;
+  };
 
   useEffect(() => {
     localStorage.setItem(TODO_LIST_KEY, JSON.stringify(todos));
@@ -79,16 +107,28 @@ const TodoList = ({ className }) => {
       <TodoInput dispatch={dispatch} />
       <TodoFilter setCategory={setCategory} setSearchTerm={setSearchTerm} />
       <div className={styles.todoList}>
-        {todosWillDisplay.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            dispatch={dispatch}
-            setCurrentTodo={setCurrentTodo}
-            setModalOpen={setModalOpen}
-            currentTodo={currentTodo}
-            {...todo}
-          />
-        ))}
+        {todosWillDisplay.map((todo) => {
+          const originalIndex = todos.findIndex((item) => item.id === todo.id);
+
+          if (originalIndex === -1) {
+            console.error("원본 인덱스를 찾을 수 없습니다.");
+            return null;
+          }
+
+          return (
+            <TodoItem
+              key={todo.id}
+              dispatch={dispatch}
+              setCurrentTodo={setCurrentTodo}
+              setModalOpen={setModalOpen}
+              currentTodo={currentTodo}
+              onDragStart={(e) => dragStart(e, originalIndex)}
+              onDragEnter={(e) => dragEnter(e, originalIndex)}
+              onDragEnd={drop}
+              {...todo}
+            />
+          );
+        })}
       </div>
       <TodoUpdateModal
         modalOpen={modalOpen}
